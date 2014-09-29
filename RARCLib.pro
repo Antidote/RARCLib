@@ -4,28 +4,34 @@
 #
 #-------------------------------------------------
 
-QT       -= core gui
-
-TARGET = RARCLib
+QT       =
+TARGET   = RARCLib
 TEMPLATE = lib
-VERSION = 0.1
-#CONFIG += staticlib
+VERSION  = 0.1
+CONFIG  += staticlib
 
 SOURCES += \
     $$PWD/src/RARCArchive.cpp \
     $$PWD/src/RARCArchiveReader.cpp
 
-include (Athena/Athena.pri)
-
+LIBS += -lAthena
 DEFINES += ATHENA_NO_SAVES ATHENA_NO_ZQUEST ATHENA_NO_SAKURA
-#DEFINES += RARCLIB_STATIC
+DEFINES += RARCLIB_STATIC
 INCLUDEPATH += $$PWD/include
 HEADERS += \
     $$PWD/include/RARCArchive.hpp \
     $$PWD/include/RARCLib.hpp \
     $$PWD/include/RARCArchiveReader.hpp
 
+isEmpty(PREFIX) {
+    PREFIX = /usr/local
+}
+
 unix {
-    target.path = /usr/lib
-    INSTALLS += target
+    CONFIG += link_pkgconfig
+    PKGCONFIG += libAthena
+    target.path = $$PREFIX/lib
+    headerFiles.files = $$HEADERS
+    headerFiles.path = $$PREFIX/include/RARCLib
+    INSTALLS += target headerFiles
 }

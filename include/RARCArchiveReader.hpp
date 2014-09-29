@@ -13,7 +13,7 @@ public:
     RARCArchiveReader(const atUint8* data, atUint64 length);
     RARCArchiveReader(const std::string& filepath);
 
-    RARCArchive* readFile();
+    RARCArchive* readArchive();
 };
 
 #endif // RARCFILEREADER_HPP
